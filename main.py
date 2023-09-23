@@ -191,7 +191,7 @@ def get_image(url, path):
 
 def figma():
     import json
-    headers = {'X-FIGMA-TOKEN': 'figd_Lw-VXa2QTxGoh6a-Uag1T6wkp5_GPQFNAG61vnnN'}
+    headers = {'X-FIGMA-TOKEN': ''}
     filekey = 'g4deIvp8xEiI0fkDSfumBz'
     url = f'https://api.figma.com/v1/files/{filekey}/nodes?ids=0%3A1'
 
