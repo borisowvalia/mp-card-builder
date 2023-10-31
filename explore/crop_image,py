@@ -1,0 +1,35 @@
+from PIL import Image
+import os
+import numpy as np
+import cv2
+
+
+def remove_background(image, model_path, **kwargs):
+    from rembg import remove, new_session
+
+    session = new_session('u2net_custom', model_path=model_path)
+
+    without_backgorund = remove(image, session=session, **kwargs)
+    result = without_backgorund.crop(without_backgorund.getbbox())
+
+    return result
+
+
+def test():
+
+    assets_folder = os.path.join(os.path.dirname(__file__), 'test')
+    for test_asset in os.listdir(assets_folder):
+        image_folder = os.path.join(assets_folder, test_asset)
+
+        img = Image.open(image_folder).convert("RGBA")
+        res = remove_background(img, model_path=os.path.join(os.path.dirname(__file__), 'u2net.onnx'),
+                                post_process_mask=True)
+        
+        background = Image.new('RGBA', res.size, color='#f5f4f2')
+        background.paste(res, (0, 0), mask=res)
+        background.show()
+
+test()
+
+
+    
